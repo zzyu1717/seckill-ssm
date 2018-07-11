@@ -21,6 +21,7 @@ target/
 *.ipr
 *.iml
 *.iws
+.idea/vcs.xml
 
 # temp file
 *.log
@@ -32,3 +33,5 @@ target/
 #system ignore
 .DS_Store
 Thumbs.db
+
+Tester.java
