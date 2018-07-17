@@ -5,7 +5,8 @@ public enum SeckillStateEnum {
     END(0,"秒杀结束"),
     REPEAT_KILL(-1,"重复异常"),
     INNER_ERROR(-2,"系统异常"),
-    DATA_REWRITE(-3,"数据篡改");
+    DATA_REWRITE(-3,"数据篡改"),
+    UNREGISTER(-4,"未登陆");
 
     private int state;
     private String stateInfo;

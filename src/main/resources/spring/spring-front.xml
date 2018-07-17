@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--配置Spring MVC-->
+
+
+     <!--
+        The above registers a number of Spring MVC infrastructure beans (handlerMapping,handleAdapter,viewResolver)
+        also adapting to dependencies available on the classpath:
+        e.g. payload converters for JSON, XML, etc
+        @NumberFormat, @DateTimeFormat
+     -->
+    <!--一 开启注解模式，简化配置-->
+    <mvc:annotation-driven/>
+
+    <!--二 静态资源默认servlet配置-->
+    <!--
+        1、加入对静态资源的处理：js,git,png,jpg
+        2、允许使用"/"做整体映射
+    -->
+    <mvc:default-servlet-handler/>
+
+    <!--三 配置jsp解析器viewResolver-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--四 扫描web下的包-->
+    <context:component-scan base-package="org.seckill.web"/>
+</beans>

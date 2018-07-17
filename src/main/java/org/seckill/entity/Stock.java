@@ -6,6 +6,8 @@ public class Stock {
 
     private long stockId;
 
+    private int number;
+
     private String name;
 
     private Date startTime;
@@ -15,6 +17,13 @@ public class Stock {
     private Date createTime;
 
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public long getStockId() {
         return stockId;

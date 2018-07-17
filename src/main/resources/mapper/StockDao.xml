@@ -15,12 +15,12 @@
     </update>
 
     <select id="queryById" resultType="Stock" parameterType="long" >
-        select stock_id, name, start_time, end_time, create_time
+        select stock_id, name, number,start_time, end_time, create_time
         from stock where stock_id=#{stockId}
     </select>
 
     <select id="queryAll" resultType="Stock">
-        select stock_id, name, start_time, end_time, create_time
+        select stock_id, name, number,start_time, end_time, create_time
         from stock
         order by create_time DESC
         limit #{offset},#{limit}

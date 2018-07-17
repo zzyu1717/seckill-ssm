@@ -67,7 +67,7 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     @Transactional // 事务注解
-    public SeckillExecution executeSeckill(long stockId, long userPhone, String md5) throws SeckillException, RepeatKillException, SeckillCloseException {
+    public SeckillExecution executeSeckill(long stockId, long userPhone, String md5) throws SeckillException {
         // 数据被篡改
         if (md5 == null || !md5.equals(getMD5(stockId))) {
             throw new SeckillException(SeckillStateEnum.DATA_REWRITE.getStateInfo());
@@ -79,8 +79,8 @@ public class SeckillServiceImpl implements SeckillService {
         try {
             // 减库存
             Date now = new Date();
-            int updateeCount = stockDao.reduceNumber(stockId, now);
-            if (updateeCount <= 0) {
+            int updateCount = stockDao.reduceNumber(stockId, now);
+            if (updateCount <= 0) {
                 // 没有更新到记录，秒杀结束
                 throw new SeckillException(SeckillStateEnum.END.getStateInfo());
             } else {
@@ -106,7 +106,7 @@ public class SeckillServiceImpl implements SeckillService {
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             // 所有编译期异常，转化为运行期异常
-            throw new SeckillException(SeckillStateEnum.INNER_ERROR.getStateInfo()+" -> "+ e.getMessage());
+            throw new SeckillException(e.getMessage());
         }
     }
 
