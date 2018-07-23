@@ -1,8 +1,9 @@
 package org.seckill.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Stock {
+public class Stock implements Serializable {
 
     private long stockId;
 

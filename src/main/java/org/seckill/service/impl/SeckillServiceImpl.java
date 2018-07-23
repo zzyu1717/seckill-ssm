@@ -2,6 +2,7 @@ package org.seckill.service.impl;
 
 import org.seckill.dao.StockDao;
 import org.seckill.dao.SuccessKilledDao;
+import org.seckill.dao.cache.RedisDao;
 import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.entity.Stock;
@@ -28,6 +29,9 @@ public class SeckillServiceImpl implements SeckillService {
     private StockDao stockDao;
 
     @Autowired
+    private RedisDao redisDao;
+
+    @Autowired
     private SuccessKilledDao successKilledDao;
 
     private String salt = "jdfjfjlrejetjjl&&((^^%&&&&%$$*I())*Fdjfjd";
@@ -48,10 +52,17 @@ public class SeckillServiceImpl implements SeckillService {
     @Override
     public Exposer exportSeckillUrl(long stockId) {
 
-        Stock stock = stockDao.queryById(stockId);
+        Stock stock = redisDao.getSeckill(stockId);
 
         if (stock == null) {
-            return new Exposer(false, stockId);
+            stock = stockDao.queryById(stockId);
+
+            if (stock == null) {
+                return new Exposer(false, stockId);
+            } else {
+                // 放入redis缓存
+                redisDao.putSeckill(stock);
+            }
         }
 
         long startTime = stock.getStartTime().getTime();
